@@ -42,7 +42,6 @@ import payirthekkam.composeapp.generated.resources.Res
 import payirthekkam.composeapp.generated.resources.arrow_back
 import payirthekkam.composeapp.generated.resources.baseline_search_24
 
-
 private val filters = listOf("Filters", "Warehouse", "Cold Storage", "< 5 km")
 private val storageList = listOf(
     StorageItem(
