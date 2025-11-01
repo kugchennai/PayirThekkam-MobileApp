@@ -88,21 +88,6 @@ fun FindStorageScreen(
             .background(Color(0xFFF9FAF9))
             .padding(16.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = popBack
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.arrow_back),
-                    contentDescription = "Back"
-                )
-            }
-            Text("Find Storage", fontWeight = FontWeight.SemiBold, fontSize = 24.sp)
-            Spacer(Modifier.width(16.dp))
-        }
 //        stickyHeader {
 ////            // Search bar
         OutlinedTextField(

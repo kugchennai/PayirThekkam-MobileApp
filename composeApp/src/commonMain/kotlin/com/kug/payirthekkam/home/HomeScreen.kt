@@ -21,9 +21,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,7 +50,7 @@ val actionsList = listOf(
 )
 
 @Composable
-fun HomeScreen(onFindStorageClicked: () -> Unit) {
+fun HomeScreen(onFindStorageClicked: () -> Unit, onMyStorageClicked: () -> Unit) {
     val screen = LocalWindowInfo.current.containerSize
     val height = screen.height
 
@@ -187,7 +184,7 @@ fun HomeScreen(onFindStorageClicked: () -> Unit) {
                         .clickable {
                             when (item) {
                                 QUICK_ACTION_FIND_STORAGE -> onFindStorageClicked()
-                                QUICK_ACTION_MY_STORAGE -> {}
+                                QUICK_ACTION_MY_STORAGE -> onMyStorageClicked()
                                 QUICK_ACTION_HELP_CENTER -> {}
                             }
                         },

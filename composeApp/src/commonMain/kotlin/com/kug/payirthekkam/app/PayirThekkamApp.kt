@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -52,8 +53,8 @@ fun PayirThekkamAppBar(
 ) {
     TopAppBar(
         title = { Text(stringResource(currentScreen.title)) },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White
         ),
         modifier = modifier,
         navigationIcon = {
@@ -83,18 +84,20 @@ fun PayirThekkamApp(
 
     Scaffold(
         topBar = {
-//            PayirThekkamAppBar(
-//                currentScreen = currentScreen,
-//                canNavigateBack = navController.previousBackStackEntry != null,
-//                navigateUp = { navController.navigateUp() }
-//            )
+            if (currentScreen.name != Screen.Home.name) {
+                PayirThekkamAppBar(
+                    currentScreen = currentScreen,
+                    canNavigateBack = navController.previousBackStackEntry != null,
+                    navigateUp = { navController.navigateUp() }
+                )
+            }
         }
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
         NavHost(
             navController = navController,
-            startDestination = Screen.MyStorage.name,
+            startDestination = Screen.Home.name,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
@@ -104,6 +107,9 @@ fun PayirThekkamApp(
                 HomeScreen(
                     onFindStorageClicked = {
                         navController.navigate(Screen.FindStorage.name)
+                    },
+                    onMyStorageClicked = {
+                        navController.navigate(Screen.MyStorage.name)
                     }
                 )
             }
