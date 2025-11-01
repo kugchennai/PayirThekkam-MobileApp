@@ -50,17 +50,13 @@ val actionsList = listOf(
 )
 
 @Composable
-fun HomeScreen(onFindStorageClicked: () -> Unit, onMyStorageClicked: () -> Unit) {
+fun HomeScreen(
+    onFindStorageClicked: () -> Unit,
+    onMyStorageClicked: () -> Unit,
+    onProfileClicked: () -> Unit
+) {
     val screen = LocalWindowInfo.current.containerSize
     val height = screen.height
-
-    val bookingVm = AppModule.bookingViewModel
-    val facilityVm = AppModule.facilityViewModel
-
-    LaunchedEffect(Unit) {
-        print(bookingVm.loadBooking(id = "1234", token = "jwt_token_here"))
-        print(facilityVm.loadFacilities())
-    }
 
     Column(
         modifier = Modifier
@@ -101,7 +97,7 @@ fun HomeScreen(onFindStorageClicked: () -> Unit, onMyStorageClicked: () -> Unit)
                     }
                     Row {
                         EmojiContainer("🔔")
-                        EmojiContainer("👤")
+                        EmojiContainer("👤", onClick = onProfileClicked)
                     }
                 }
 
@@ -231,13 +227,15 @@ fun HomeScreen(onFindStorageClicked: () -> Unit, onMyStorageClicked: () -> Unit)
 }
 
 @Composable
-private fun EmojiContainer(emoji: String) {
+private fun EmojiContainer(emoji: String, onClick: () -> Unit = {}) {
     Box(
         modifier = Modifier.padding(4.dp)
             .background(
                 color = Color.White.copy(alpha = 0.2f),
                 shape = CircleShape
-            )
+            ).clickable {
+                onClick()
+            }
     ) {
         Text(emoji, modifier = Modifier.padding(8.dp))
     }

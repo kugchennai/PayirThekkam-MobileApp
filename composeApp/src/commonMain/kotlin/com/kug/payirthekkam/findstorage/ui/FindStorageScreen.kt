@@ -39,7 +39,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kug.payirthekkam.ViewModel.FacilityViewModel
+import com.kug.payirthekkam.di.AppModule
 import com.kug.payirthekkam.findstorage.ui.viewmodel.FindStorageViewModel
 import org.jetbrains.compose.resources.painterResource
 import payirthekkam.composeapp.generated.resources.Res
@@ -47,44 +50,48 @@ import payirthekkam.composeapp.generated.resources.arrow_back
 import payirthekkam.composeapp.generated.resources.baseline_search_24
 
 private val filters = listOf("Filters", "Warehouse", "Cold Storage", "< 5 km")
-private val storageList = listOf(
-    StorageItem(
-        name = "Coimbatore Central Warehouse",
-        type = "Warehouse",
-        location = "Coimbatore, TN",
-        capacity = "1000 kg",
-        distance = "3.2 km",
-        rating = 4.5,
-        price = 50,
-        available = true
-    ),
-    StorageItem(
-        name = "Periyakulam Cold Storage",
-        type = "Cold Storage",
-        location = "Periyakulam, TN",
-        capacity = "500 kg",
-        distance = "5.8 km",
-        rating = 4.8,
-        price = 75,
-        available = true
-    ),
-    StorageItem(
-        name = "Tiruppur Storage Hub",
-        type = "Warehouse",
-        location = "Tiruppur, TN",
-        capacity = "1500 kg",
-        distance = "8.3 km",
-        rating = 4.6,
-        price = 55,
-        available = true
-    )
-)
+//private val storageList = listOf(
+//    StorageItem(
+//        name = "Coimbatore Central Warehouse",
+//        type = "Warehouse",
+//        location = "Coimbatore, TN",
+//        capacity = "1000 kg",
+//        distance = "3.2 km",
+//        rating = 4.5,
+//        price = 50,
+//        available = true
+//    ),
+//    StorageItem(
+//        name = "Periyakulam Cold Storage",
+//        type = "Cold Storage",
+//        location = "Periyakulam, TN",
+//        capacity = "500 kg",
+//        distance = "5.8 km",
+//        rating = 4.8,
+//        price = 75,
+//        available = true
+//    ),
+//    StorageItem(
+//        name = "Tiruppur Storage Hub",
+//        type = "Warehouse",
+//        location = "Tiruppur, TN",
+//        capacity = "1500 kg",
+//        distance = "8.3 km",
+//        rating = 4.6,
+//        price = 55,
+//        available = true
+//    )
+//)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FindStorageScreen(
-    viewModel: FindStorageViewModel = viewModel { FindStorageViewModel() }
+    viewModel: FacilityViewModel = AppModule.facilityViewModel
 ) {
+
+    val storageList by viewModel.facilities.collectAsStateWithLifecycle()
+
+
     var searchQuery by rememberSaveable {
         mutableStateOf("")
     }
@@ -180,7 +187,19 @@ fun FindStorageScreen(
 //            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
 //        items(storageList) { storage ->
         repeat(storageList.size) {
-            StorageCard(storageList[it])
+            val currStorage = storageList[it]
+            StorageCard(
+                StorageItem(
+                    name = currStorage.name,
+                    type = currStorage.type,
+                    location = currStorage.district,
+                    capacity = currStorage.totalCapacitySacks.toString(),
+                    distance = "",
+                    rating = 5.0,
+                    price = 10,
+                    available = true
+                )
+            )
         }
 //        }
 //            }
@@ -251,7 +270,9 @@ fun StorageCard(item: StorageItem) {
                 }
 
                 Button(
-                    onClick = { /* Book now */ },
+                    onClick = {
+
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
                     shape = RoundedCornerShape(12.dp)
                 ) {

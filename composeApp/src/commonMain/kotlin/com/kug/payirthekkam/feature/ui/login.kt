@@ -15,12 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import payirthekkam.composeapp.generated.resources.Res
-import payirthekkam.composeapp.generated.resources.arrow_back
 import payirthekkam.composeapp.generated.resources.baseline_android_24
 
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navigateToHome: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -82,7 +81,10 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* TODO: Implement login logic */ },
+            onClick = {
+                if (email.isNotEmpty() && password.isNotEmpty())
+                    navigateToHome()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),

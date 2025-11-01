@@ -1,5 +1,6 @@
 package com.kug.payirthekkam.feature.ui.my_storage
 
+import Booking
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -7,12 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -27,9 +27,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kug.payirthekkam.app.data.Booking
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kug.payirthekkam.di.AppModule
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import payirthekkam.composeapp.generated.resources.Res
@@ -37,28 +38,18 @@ import payirthekkam.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 fun MyStorageScreen(
-    viewModel: MyStorageViewModel = viewModel {
-        MyStorageViewModel()
-    }
 ) {
-    val state = viewModel.uiState.value
+    val viewModel = AppModule.bookingViewModel
+    val state by viewModel.booking.collectAsStateWithLifecycle()
 
-    when (state) {
-        is MyStorageUiState.Loading -> {
-        }
-
-        is MyStorageUiState.Idle -> {
-
-        }
-
-        is MyStorageUiState.Success -> {
-            MyStorageContent(state.data)
-        }
-
-        is MyStorageUiState.Error -> {}
+    state?.let {
+        MyStorageContent(
+            MyStorageData(
+                tabItems = listOf("Active", "Completed"),
+                bookingList = listOf(it)
+            )
+        )
     }
-
-
 }
 
 @Composable
@@ -86,17 +77,15 @@ fun MyStorageContent(data: MyStorageData) {
             }
         }
 
-        when (selectedTabIndex) {
-            0 -> {
-                data.bookingList.forEach {
-                    MyStorageCard(it)
-                }
-            }
-
-            1 -> {
-                data.bookingList.forEach {
-                    MyStorageCard(it)
-                }
+        if (data.bookingList.isNotEmpty()) {
+            Text(
+                "No Storage Available",
+                modifier = Modifier.fillMaxSize(),
+                textAlign = TextAlign.Center
+            )
+        } else {
+            data.bookingList.forEach {
+                MyStorageCard(it)
             }
         }
     }
@@ -136,7 +125,7 @@ fun MyStorageCard(booking: Booking) {
                         modifier = Modifier.padding(start = 16.dp)
                     ) {
                         Text("Paddy")
-                        Text("${booking.quantity} kg")
+                        Text("${booking.quantitySacks} kg")
                     }
                 }
                 Spacer(
@@ -158,7 +147,7 @@ fun MyStorageCard(booking: Booking) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text("Start")
-                Text(booking.startDate)
+                Text(booking.startDate.toString())
             }
 
             Row(
@@ -168,7 +157,7 @@ fun MyStorageCard(booking: Booking) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text("End")
-                Text(booking.endDate ?: "15 Dec 2025")
+                Text(booking.endDate.toString())
             }
 
             Row(

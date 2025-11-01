@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,16 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import payirthekkam.composeapp.generated.resources.Res
-import payirthekkam.composeapp.generated.resources.arrow_back
 import payirthekkam.composeapp.generated.resources.baseline_person_24
 import payirthekkam.composeapp.generated.resources.outline_360_24
 import payirthekkam.composeapp.generated.resources.outline_add_call_24
 import payirthekkam.composeapp.generated.resources.outline_data_info_alert_24
 
 @Composable
-fun ProfileScreen(
-    onBack: () -> Unit = {}
-) {
+fun ProfileScreen() {
 
     Column(
         modifier = Modifier
@@ -40,13 +36,11 @@ fun ProfileScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(260.dp)
-                .background(Color(0xFF00994C), RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp))
+                .background(
+                    Color(0xFF00994C),
+                    RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp)
+                )
         ) {
-
-            IconButton(onClick = onBack, modifier = Modifier.padding(12.dp)) {
-                Icon(painter = painterResource(Res.drawable.arrow_back), contentDescription = null, tint = Color.White)
-            }
-
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -59,7 +53,7 @@ fun ProfileScreen(
                     modifier = Modifier.size(90.dp)
                 ) {
                     Icon(
-                       painterResource(Res.drawable.baseline_person_24),
+                        painterResource(Res.drawable.baseline_person_24),
                         contentDescription = null,
                         modifier = Modifier.padding(16.dp),
                         tint = Color(0xFF26A269)
@@ -67,7 +61,12 @@ fun ProfileScreen(
                 }
 
                 Spacer(Modifier.height(8.dp))
-                Text("முருகன்", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Medium)
+                Text(
+                    "முருகன்",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium
+                )
                 Text("+91 98765 43210", color = Color.White, fontSize = 13.sp)
             }
         }
@@ -91,7 +90,8 @@ fun ProfileScreen(
                         Res.drawable.baseline_person_24
                     ),
                     label = "Name",
-                    value = "Farmer Name")
+                    value = "Farmer Name"
+                )
 //                ProfileInfoRow(painterResource(Res.drawable.outline_add_call_24), "Phone", "+91 98765 43210")
 //                ProfileInfoRow(painterResource(Res.drawable.outline_add_location_24), "District", "கோவை")
             }
@@ -111,9 +111,10 @@ fun ProfileScreen(
         SettingItem(
             painterResource(Res.drawable.outline_360_24),
             title = "Location",
-            trailing = "PH")
+            trailing = "PH"
+        )
         SettingItem(painterResource(Res.drawable.outline_data_info_alert_24), "Help Center")
-        SettingItem( painterResource(Res.drawable.outline_data_info_alert_24), "Terms & Conditions")
+        SettingItem(painterResource(Res.drawable.outline_data_info_alert_24), "Terms & Conditions")
         SettingItem(painterResource(Res.drawable.outline_data_info_alert_24), "Privacy Policy")
     }
 }
@@ -156,7 +157,11 @@ private fun SettingItem(icon: Painter, title: String, trailing: String? = null) 
                 Text(trailing, color = Color.Gray, fontSize = 13.sp)
             }
 
-          Icon(painterResource(Res.drawable.outline_add_call_24),  tint = Color.Gray.copy(alpha = 0.4f), contentDescription = null)
+            Icon(
+                painterResource(Res.drawable.outline_add_call_24),
+                tint = Color.Gray.copy(alpha = 0.4f),
+                contentDescription = null
+            )
         }
     }
 }

@@ -110,7 +110,9 @@ fun PayirThekkamApp(
                 .padding(innerPadding)
         ) {
             composable(route = Screen.Login.name) {
-                LoginScreen()
+                LoginScreen(navigateToHome = {
+                    navController.navigate(Screen.Home.name)
+                })
             }
             composable(route = Screen.Home.name) {
                 HomeScreen(
@@ -119,6 +121,9 @@ fun PayirThekkamApp(
                     },
                     onMyStorageClicked = {
                         navController.navigate(Screen.MyStorage.name)
+                    },
+                    onProfileClicked = {
+                        navController.navigate(Screen.Profile.name)
                     }
                 )
             }
