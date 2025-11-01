@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kug.payirthekkam.feature.ui.FeatureScreen
+import com.kug.payirthekkam.findstorage.ui.FindStorageScreen
 import com.kug.payirthekkam.home.HomeScreen
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -31,7 +32,8 @@ import payirthekkam.composeapp.generated.resources.home
  */
 enum class Screen(val title: StringResource) {
     Home(title = Res.string.home),
-    Feature(title = Res.string.feature)
+    Feature(title = Res.string.feature),
+    FindStorage(title = Res.string.feature)
 }
 
 /**
@@ -78,11 +80,11 @@ fun PayirThekkamApp(
 
     Scaffold(
         topBar = {
-            PayirThekkamAppBar(
-                currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
-            )
+//            PayirThekkamAppBar(
+//                currentScreen = currentScreen,
+//                canNavigateBack = navController.previousBackStackEntry != null,
+//                navigateUp = { navController.navigateUp() }
+//            )
         }
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -97,27 +99,18 @@ fun PayirThekkamApp(
         ) {
             composable(route = Screen.Home.name) {
                 HomeScreen(
-                    onNextButtonClicked = {
-                        navController.navigate(Screen.Feature.name)
+                    onFindStorageClicked = {
+                        navController.navigate(Screen.FindStorage.name)
                     }
                 )
-                /**
-                Sample screen with params
-                 **/
-//                StartOrderScreen(
-//                    quantityOptions = DataSource.quantityOptions,
-//                    onNextButtonClicked = {
-//                        viewModel.setQuantity(it)
-//                        navController.navigate(CupcakeScreen.Flavor.name)
-//                    },
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .padding(16.dp)
-//                )
             }
 
             composable(Screen.Feature.name) {
                 FeatureScreen()
+            }
+
+            composable(Screen.FindStorage.name) {
+                FindStorageScreen(popBack = { navController.popBackStack() })
             }
         }
     }

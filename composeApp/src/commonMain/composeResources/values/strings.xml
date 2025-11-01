@@ -3,4 +3,5 @@
     <string name="back_button">Back</string>
     <string name="home">Home</string>
     <string name="feature">Feature</string>
+    <string name="find_storage">Find Storage</string>
 </resources>
