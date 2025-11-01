@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.kug.payirthekkam.feature.ui.FeatureScreen
 import com.kug.payirthekkam.findstorage.ui.FindStorageScreen
 import com.kug.payirthekkam.feature.ui.my_storage.MyStorageScreen
+import com.kug.payirthekkam.feature.ui.LoginScreen
 import com.kug.payirthekkam.home.HomeScreen
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -28,12 +29,14 @@ import payirthekkam.composeapp.generated.resources.arrow_back
 import payirthekkam.composeapp.generated.resources.back_button
 import payirthekkam.composeapp.generated.resources.feature
 import payirthekkam.composeapp.generated.resources.home
+import payirthekkam.composeapp.generated.resources.login
 import payirthekkam.composeapp.generated.resources.my_storage
 
 /**
  * enum values that represent the screens in the app
  */
 enum class Screen(val title: StringResource) {
+    Login(title = Res.string.login),
     Home(title = Res.string.home),
     Feature(title = Res.string.feature),
     FindStorage(title = Res.string.feature),
@@ -97,12 +100,15 @@ fun PayirThekkamApp(
 
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.name,
+            startDestination = Screen.Login.name,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
+            composable(route = Screen.Login.name) {
+                LoginScreen()
+            }
             composable(route = Screen.Home.name) {
                 HomeScreen(
                     onFindStorageClicked = {

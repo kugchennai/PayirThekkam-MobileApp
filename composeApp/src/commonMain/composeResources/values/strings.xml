@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Payir Thekkam</string>
     <string name="back_button">Back</string>
     <string name="home">Home</string>
+    <string name="login">Login</string>
     <string name="feature">Feature</string>
     <string name="find_storage">Find Storage</string>
     <string name="my_storage">My Storage</string>
