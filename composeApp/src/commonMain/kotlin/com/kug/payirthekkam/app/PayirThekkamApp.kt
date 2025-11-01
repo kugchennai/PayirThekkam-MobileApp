@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.kug.payirthekkam.feature.ui.ProfileScreen
 import com.kug.payirthekkam.feature.ui.FeatureScreen
 import com.kug.payirthekkam.home.HomeScreen
 import org.jetbrains.compose.resources.StringResource
@@ -25,13 +26,16 @@ import payirthekkam.composeapp.generated.resources.arrow_back
 import payirthekkam.composeapp.generated.resources.back_button
 import payirthekkam.composeapp.generated.resources.feature
 import payirthekkam.composeapp.generated.resources.home
+import payirthekkam.composeapp.generated.resources.profile
 
 /**
  * enum values that represent the screens in the app
  */
 enum class Screen(val title: StringResource) {
     Home(title = Res.string.home),
-    Feature(title = Res.string.feature)
+    Feature(title = Res.string.feature),
+
+    Profile(title = Res.string.profile)
 }
 
 /**
@@ -89,7 +93,7 @@ fun PayirThekkamApp(
 
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.name,
+            startDestination = Screen.Profile.name,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
@@ -98,7 +102,7 @@ fun PayirThekkamApp(
             composable(route = Screen.Home.name) {
                 HomeScreen(
                     onNextButtonClicked = {
-                        navController.navigate(Screen.Feature.name)
+                        navController.navigate(Screen.Profile.name)
                     }
                 )
                 /**
@@ -118,6 +122,10 @@ fun PayirThekkamApp(
 
             composable(Screen.Feature.name) {
                 FeatureScreen()
+            }
+
+            composable(Screen.Profile.name) {
+                ProfileScreen()
             }
         }
     }
