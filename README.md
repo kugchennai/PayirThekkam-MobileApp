@@ -11,8 +11,6 @@ The goal is to reduce post-harvest losses by giving farmers quick access to veri
 Figma UI Designs:
 [https://www.figma.com/make/2AWM2oC6k1TDcnGrIvNUfh/AgroLink-Tamil-Nadu-App?node-id=0-4&t=uf8YU6cHnEeVsEFO-1](https://www.figma.com/make/2AWM2oC6k1TDcnGrIvNUfh/AgroLink-Tamil-Nadu-App?node-id=0-4&t=uf8YU6cHnEeVsEFO-1)
 
-This project was built during the Kohacks Buildathon using modern Kotlin Multiplatform technologies.
-
 ## Key Features
 
 * Locate nearby storage facilities based on user location
@@ -26,7 +24,3 @@ This project was built during the Kohacks Buildathon using modern Kotlin Multipl
 
 * Kotlin Multiplatform
 * Compose Multiplatform
-* Kotlin/Native
-* Gradle Kotlin DSL
-* Android Studio
-* Xcode
